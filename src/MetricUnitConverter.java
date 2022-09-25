@@ -192,6 +192,24 @@ public class MetricUnitConverter {
     }
 
     /**
+     * Print the result of the requested conversion.
+     * 
+     * @param splitUserInput: The string array that contains the split user input.
+     * @param convertedNumber: The double that contains the converted number.
+     */
+    private static void printResultOfRequestedConversion(String[] splitUserInput, double convertedNumber) {
+        System.out.println("The result for the requested conversion is:");
+        System.out.println(splitUserInput[0] + " " + splitUserInput[1] + " " + splitUserInput[2] + " " + convertedNumber
+                + " " + splitUserInput[3]);
+
+        // Print slashes to mark the end of the iteration before starting the next iteration.
+        for (int i = 0; i < 160; i++) {
+            System.out.print("/");
+        }
+        System.out.println("");
+    }
+
+    /**
      * Main method for the metric unit converter tool.
      * 
      * @param args: Unused parameter.
@@ -203,7 +221,8 @@ public class MetricUnitConverter {
         // Print a welcome message.
         printWelcome();
 
-        do {
+        // Allow the user to keep doing conversions until they enter the quit command.
+        while (true) {
             // Print an instruction message and an input text cursor to show the user where to type their input.
             printInstructionsAndInputTextCursor();
 
@@ -304,8 +323,11 @@ public class MetricUnitConverter {
             double multiplierToConvertInputtedNumberToRootUnitNumber = convertPrefixToMultiplierNumber(
                     prefixOfUnitToConvert);
 
+            // Store a value to indicate what "approximately zero" means as a double value.
+            double epsilon = 1e-50;
+
             // If the multiplier is approximately equal to zero, the prefix from the unit that needs to be converted wasn't a valid prefix. Print an error message for invalid user-input and let the user retry inputting.
-            if ((multiplierToConvertInputtedNumberToRootUnitNumber - 0.0) < 0.1) {
+            if ((multiplierToConvertInputtedNumberToRootUnitNumber - 0.0) < epsilon) {
                 // Print an error message to tell the user that the inputted prefix is not a SI valid prefix.
                 printErrorForInvalidPrefix(prefixOfUnitToConvert);
 
@@ -324,7 +346,7 @@ public class MetricUnitConverter {
                     prefixOfConvertedUnit);
 
             // If the multiplier is approximately equal to zero, the prefix from the converted unit wasn't a valid prefix. Print an error message for invalid user-input and let the user retry inputting.
-            if ((multiplierToConvertRootUnitNumberToOutputNumber - 0.0) < 0.1) {
+            if ((multiplierToConvertRootUnitNumberToOutputNumber - 0.0) < epsilon) {
                 // Print an error message to tell the user that the inputted prefix is not a valid SI prefix.
                 printErrorForInvalidPrefix(prefixOfConvertedUnit);
 
@@ -333,12 +355,12 @@ public class MetricUnitConverter {
             }
 
             // Calculate the number that is going to be outputted with the converted unit.
-            double convertedNumber = numberToConvert * multiplierToConvertInputtedNumberToRootUnitNumber / multiplierToConvertRootUnitNumberToOutputNumber;
+            double convertedNumber = numberToConvert * multiplierToConvertInputtedNumberToRootUnitNumber
+                    / multiplierToConvertRootUnitNumberToOutputNumber;
 
-            // Print the final expression.
-            System.out.println("Here is result for the requested conversion:");
-            System.out.println(splitUserInput[0] + " " + splitUserInput[1] + " " +  splitUserInput[2] + " " + convertedNumber + " " + splitUserInput[3]);
+            // Print the result of the requested conversion.
+            printResultOfRequestedConversion(splitUserInput, convertedNumber);
 
-        } while (true);
+        }
     }
 }
