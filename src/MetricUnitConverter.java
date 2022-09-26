@@ -198,8 +198,12 @@ public class MetricUnitConverter {
      * @param convertedNumber: The double that contains the converted number.
      */
     private static void printResultOfRequestedConversion(String[] splitUserInput, double convertedNumber) {
+        // Convert the converted number into a formatted string.
+        String formattedConvertedNumber = String.format("%.3g", convertedNumber);
+
+        // Print the result of the requested conversion.
         System.out.println("The result for the requested conversion is:");
-        System.out.println(splitUserInput[0] + " " + splitUserInput[1] + " " + splitUserInput[2] + " " + convertedNumber
+        System.out.println(splitUserInput[0] + " " + splitUserInput[1] + " " + splitUserInput[2] + " " + formattedConvertedNumber
                 + " " + splitUserInput[3]);
 
         // Print slashes to mark the end of the iteration before starting the next iteration.
